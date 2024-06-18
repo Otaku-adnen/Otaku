@@ -70,7 +70,7 @@ header::after {
     cursor: pointer;
     position: absolute;
     top: 15px;
-    left: 15px;
+    left: 7px;
     z-index: 1000;
 }
 
