@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Stream</title>
+    <link rel="icon" href="https://i.pinimg.com/736x/2b/e6/80/2be680292cdea62cd8495a9d5a5866c0.jpg" type="image/x-icon">
+
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* إضافة التنسيق الأساسي للصفحة */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+	color: #FFFFFF;
+}
+
+/* تنسيق الهيدر */
+header {
+    background: linear-gradient(90deg, rgba(229, 9, 20, 1) 0%, rgba(241, 39, 17, 1) 50%, rgba(229, 9, 20, 1) 100%);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #E50914;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    z-index: 1;
+}
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    color: #FFF;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    text-align: center;
+    animation: glow 2s infinite alternate;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 0;
+    animation: rotateBg 10s linear infinite;
+}
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.5);
+    }
+}
+
+@keyframes rotateBg {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+/* تنسيق القائمة الجانبية */
+
+.sidebar {
+    background-color: #444;
+    color: white;
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    left: -220px; /* مخفي بشكل افتراضي */
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    padding-top: 20px;
+    z-index:4;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #555;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+/* تنسيق قسم تفاصيل الأنمي */
+#animeDetails {
+    margin-left: 270px;
+    padding: 20px;
+}
+
+#animeDetails h2 {
+    font-size: 24px;
+}
+
+#animeDetails img {
+    display: block;
+    margin: 10px 0;
+}
+
+#animeDetails p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* تنسيق قائمة الحلقات */
+.video-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.video-list li {
+    background-color: red;
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+    flex: 1 1 calc(33.333% - 20px);
+    box-sizing: border-box;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.video-list li:hover {
+    background-color: #ddd;
+}
+
+/* تنسيق مشغل الفيديو */
+video {
+    display: block;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    border-radius: 10px;}
+
+/* تنسيق قائمة الجودة */
+.controls {
+    margin-left: 270px;
+    padding: 10px;
+}
+
+.controls label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+/* تنسيق الرسالة */
+.message {
+    display: none;
+    margin-left: 270px;
+    padding: 10px;
+    background-color: #ffc;
+    border: 1px solid #cc9;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* تنسيق محرك البحث */
+#search-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#anime-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 270px;
+}
+
+#anime-items li {
+    list-style: none;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+    width: calc(25% - 20px);
+    box-sizing: border-box;
+}
+
+#anime-items li img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
+}
+
+#anime-items li .anime-title {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#anime-items li .anime-genres {
+    color: #777;
+}
+
+/* هامبرغر للعرض الجانبي على الشاشات الصغيرة */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        top: 75px; /* Adjusted for header height */
+        left: -220px; /* مخفي بشكل افتراضي */
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    #animeDetails, .controls, .message {
+        margin-left: 0;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+/* استهدف الشاشات الكبيرة (أكبر من 768 بكسل) */
+@media (min-width: 769px) {
+    .sidebar {
+        background: linear-gradient(90deg, rgba(229, 9, 20, 1) 0%, rgba(241, 39, 17, 1) 50%, rgba(229, 9, 20, 1) 100%);
+        color: white;
+    
+    width: 200px;
+        height: 100%;
+        position: fixed;
+        top:0;
+        left: 0;
+        transition: none; /* إزالة التحول للحفاظ على القائمة مرئية دائمًا */
+        overflow-y: auto;
+        padding-top: 20px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar ul li {
+        border-bottom: 1px solid #555;
+    }
+
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+        background-color: #555;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        padding: 20px;
+        padding-top: 70px;
+        width: calc(100% - 240px);
+        transition: margin-left 0.3s ease;
+    }
+	}
+	.download-link {
+	    margin-right: 10px;
+	}
+	.controls {
+	    margin: 20px 0;
+	}
+
+</style>
+</head>
+<body>
+    <header>
+    	<div class="hamburger" onclick="toggleSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+        <h1>Anime Stream</h1>
+    </header>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="Anime Stream.html">الصفحة الرئيسية</a></li>
+            <li><a href="schedule.html">مواعيد نزول الحلقات</a></li>
+            <li><a href="all-animes.html">جميع الأنميات</a></li>
+        </ul>
+    </nav>
+       <div id="animeDetails">
+        <img id="animeImage" src="" alt="صورة الأنمي" width="200">
+        <h2 id="animeTitle"></h2>
+        <p id="animeStory"></p>
+        <p id="animeInfo"></p>
+        <h3>الحلقات</h3>
+        <ul id="animeEpisodes" class="video-list"></ul>
+        <video id="animeVideo" width="600" controls>
+            <source id="animeVideoSource" src="" type="video/mp4">
+            متصفحك لا يدعم تشغيل الفيديو.
+        </video>
+        </div>
+		<div id="message" class="message hidden">الحلقة المطلوبة غير متوفرة حالياً. سيتم إضافتها قريباً.</div>
+        <script>
+        
+        const animes = {
+            Tensei_shitara_Ken_Deshita: {
+                title: 'Tensei shitara Ken Deshita',
+                image: 'https://witanime.cyou/wp-content/uploads/2022/09/Tensei-shitara-Ken-Deshita-323x470.jpg',
+                story: 'قصة الأنمي:القصة تتحدث عن شخص تم تجسيده كسيف فيجد نفسه في وسط غابة تمزقها الوحوش ويصادف فتاة مصابة تهرب خائفة للنجاة بحياتها لإنقاذها من المعتدين عليها يقدم الإثنين نفسهما الفتاة هي فران وتحمل ماضيًا ثقيلًا بعد أن عانت من العبودية وسوء المعاملة من قبيلتها القطط السوداء نظرًا لأن البطل غير قادر على تذكر اسمه من حياته الماضية فإن فران تمنحه اسم شيشو وتصبح مستخدمة له بعد ذلك أصبح شيشو و فران فريقًا رائعًا يشرع في مهام لتحرير المظلومين وتحقيق العدال!...',
+                info: 'التصنيفات: أكشن،خيال',
+                episodes: [
+    			{title: 'حلقة 1', video: 'https://shahidha.net/files/35223/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP01%5B480p%5D.mp4'},
+    			{title: 'حلقة 2', video: 'https://shahidha.net/files/35221/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP02%5B480p%5D.mp4'},
+    			{title: 'حلقة 3', video: 'https://shahidha.net/files/35222/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP03%5B480p%5D.mp4'},
+    			{title: 'حلقة 4', video: 'https://shahidha.net/files/35225/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP04%5B480p%5D.mp4'},
+    			{title: 'حلقة 5', video: 'https://shahidha.net/files/35224/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP05%5B480p%5D.mp4'},
+    			{title: 'حلقة 6', video: 'https://shahidha.net/files/35226/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP06%5B480p%5D.mp4'},
+    			{title: 'حلقة 7', video: 'https://shahidha.net/files/35227/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP07%5B480p%5D.mp4'},
+    			{title: 'حلقة 8', video: 'https://shahidha.net/files/35228/%5BAnimeiat.co%5DTensei_shitara_Ken_Deshita_-_EP08%5B480p%5D.mp4'}
+   				]
+            },
+            Ore_Dake_Level_Up_na_Ken: {
+                title: 'Ore Dake Level Up na Ken',
+                image: 'https://witanime.cyou/wp-content/uploads/2024/01/Solo-Leveling-Ore-dake-Level-Up-na-Ken-scaled-413x559.jpg',
+                story: 'قصة الأنمي: منذ 10 سنوات بدأت بوابات غامضة تطهر ضمن أنحاء العالم وهذه البوابات تحوي بداخلها وحوش لذلك يجب على الصيادين الذين حصلو على قوى غامضة الدخول للبوابات والقضاء على الوحوش قبل أن تخرج إلى العالم و تنشر الفساد والرعب في الأرض ويأتي بطل القصة سونغ جين وو وهو معروف بأنه أضعف صياد في العالم من المرتبة e إلى إحدى البوابات الغامضة حيث قبل لسونغ ومن معه بأن الوحوش التي في داخل البوابة مستواها ضعيف و يستطيعون القضاء عليهم لكن سونغ والصيادين دخلو إلى غرفة غامضة....',
+                info: 'التصنيفات:مغامرات,أكشن,خيال',
+                episodes: [
+                    { title: 'حلقة 1', video: 'https://wahmi.org/download/UhLK0VcW3XjimS5/LJlGnoeWRm15w/%5BWitanime.com%5D%20SLODLUNK%20EP%2001%20SD.mp4' },
+                    { title: 'حلقة 2', video: 'https://wahmi.org/download/gEpPgTxyH6Ng5oM/EL73gxekyz9Ba/%5BWitanime.com%5D%20SLODLUNK%20EP%2002%20SD.mp4' },
+                    { title: 'حلقة 3', video: 'https://wahmi.org/download/rCGHYp0jL6adHyL/RMKGJDVW131oP/%5BWitanime.com%5D%20SLODLUNK%20EP%2003%20SD.mp4' },
+                    { title: 'حلقة 4', video: 'https://wahmi.org/download/wxMhWfIX8o5brRk/9QWmp6eWdzEB6/%5BWitanime.com%5D%20SLODLUNK%20EP%2004%20SD.mp4' },
+                    { title: 'حلقة 5', video: 'https://wahmi.org/download/cqiCaqrZ4uzJBkQ/gXeGO19AA3Aa7/%5BWitanime.com%5D%20SLODLUNK%20EP%2005%20SD.mp4' },
+                    { title: 'حلقة 6', video: 'https://wahmi.org/download/VrCxlFiETG5BMz2/N2p3DZnPdGMa5/%5BWitanime.com%5D%20SLODLUNK%20EP%2006%20SD.mp4' },
+                    { title: 'حلقة 7', video: 'https://wahmi.org/download/CVbEDzWP2kEZHxv/0rpmvYWpgGRgZ/%5BWitanime.com%5D%20SLODLUNK%20EP%2007%20SD.mp4' },
+                    { title: 'حلقة 7.5', video: 'https://wahmi.org/download/WUcWmYni4WPbL7X/E1x3AlqxDmyk6/%5BWitanime.com%5D%20SLODLUNK%20EP%2007.5%20SD.mp4' },
+                    { title: 'حلقة 8', video: 'https://wahmi.org/download/Mn67ZLTiqeAecxM/2WVGrD9d03kx7/%5BWitanime.com%5D%20SLODLUNK%20EP%2008%20SD.mp4' },
+                    { title: 'حلقة 9', video: 'https://wahmi.org/download/8TsfmN0y5YNFvJQ/vgKGxVlX938Qn/%5BWitanime.com%5D%20SLODLUNK%20EP%2009%20SD.mp4' },
+                    { title: 'حلقة 10',video: 'https://wahmi.org/download/XgMuDqUVZWYZvkI/RMKGJDVK131oP/%5BWitanime.com%5D%20SLODLUNK%20EP%2010%20SD.mp4' },
+                    { title: 'حلقة 11', video: 'https://wahmi.org/download/D7WqQbp7ngBVeGW/b5Ozd0eVazB8L/%5BWitanime.com%5D%20SLODLUNK%20EP%2011%20SD.mp4' },
+                    { title: 'حلقة 12', video: 'https://wahmi.org/download/lKIcuoFQmZ8uMsW/obj3joe7PzDxJ/%5BWitanime.com%5D%20SLODLUNK%20EP%2012%20END%20SD.mp4' }
+                ]
+            },
+            Slime_Taoshite_300_nen_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita: {
+                title: 'Slime Taoshite 300 nen Shiranai Uchi ni Level Max ni Nattemashita',
+                image: 'https://witanime.cyou/wp-content/uploads/2021/04/Slime-Taoshite-300-nen-Shiranai-Uchi-ni-Level-Max-ni-Nattemashita-scaled-413x559.jpg',
+                story: 'قصة الأنمي: لقصة تدور حول فتاة تدعى ازوسا مجتهدة تعيش في حياة وظيفية شاقة مما يؤثر عليها بشكل سلبي وفي أحد الايام فقدت حياتها من الاجهاد، تستيقظ ازوسا لاحقاً لتجد نفسها مبعوثة من جديد كساحرة خالدة لا تموت ولا تكبر في العمر، فتعهد لنفسها بانها ستعيش حياة خالية من التوتر وبسرور....',
+                info: 'التصنيفات: كوميديا,خيال',
+                episodes: [
+                    { title: 'حلقة 1', video: 'https://shahidha.net/files/27367/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP01%5B480p%5D.mp4' },
+                    { title: 'حلقة 2', video: 'https://shahidha.net/files/28072/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP02%5B480p%5D.mp4' },
+                    { title: 'حلقة 3', video: 'https://shahidha.net/files/28587/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP03%5B480p%5D.mp4' },
+                    { title: 'حلقة 4', video: 'https://shahidha.net/files/28649/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP04%5B480p%5D.mp4' },
+                    { title: 'حلقة 5', video: 'https://shahidha.net/files/28913/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP05%5B480p%5D.mp4' },
+                    { title: 'حلقة 6', video: 'https://shahidha.net/files/29328/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP06%5B480p%5D.mp4' },
+                    { title: 'حلقة 7', video: 'https://shahidha.net/files/29723/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP07%5B480p%5D.mp4' },
+                    { title: 'حلقة 8', video: 'https://shahidha.net/files/30012/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP08%5B480p%5D.mp4' },
+                    { title: 'حلقة 9', video: 'https://shahidha.net/files/30100/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP09%5B480p%5D.mp4' },
+                    { title: 'حلقة 10',video: 'https://shahidha.net/files/30166/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP10%5B480p%5D.mp4' },
+                    { title: 'حلقة 11', video: 'https://shahidha.net/files/30358/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP11%5B480p%5D.mp4' },
+                    { title: 'حلقة 12', video: 'https://shahidha.net/files/30532/%5BAnimeiat.co%5DSlime_Taoshite_300-nen%2C_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita_-_EP12%5B480p%5D.mp4' }
+                ]
+            }
+        };
+      function getAnimeKeyFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('anime');
+        }
+
+        function showAnimeDetails() {
+            const animeKey = getAnimeKeyFromUrl();
+            if (animeKey && animes[animeKey]) {
+                const anime = animes[animeKey];
+                document.getElementById('animeTitle').textContent = anime.title;
+                document.getElementById('animeImage').src = anime.image;
+                document.getElementById('animeStory').textContent = anime.story;
+                document.getElementById('animeInfo').textContent = anime.info;
+
+                const episodesList = document.getElementById('animeEpisodes');
+                episodesList.innerHTML = '';
+                anime.episodes.forEach(episode => {
+                    const li = document.createElement('li');
+                    li.textContent = episode.title;
+                    li.onclick = () => {
+                        document.getElementById('animeVideoSource').src = episode.video;
+                        document.getElementById('animeVideo').load();
+                    };
+                    episodesList.appendChild(li);
+                });
+
+                document.getElementById('animeDetails').style.display = 'block';
+            } else {
+                document.getElementById('animeDetails').textContent = 'لم يتم العثور على الأنمي.';
+            }
+        }
+
+        window.onload = showAnimeDetails;
+
+function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('open');
+}
+
+		</script>
+</body>
+</html>

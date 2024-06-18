@@ -1,0 +1,145 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Stream</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://i.pinimg.com/736x/2b/e6/80/2be680292cdea62cd8495a9d5a5866c0.jpg" type="image/x-icon">
+
+    <script lang="javascript" src="script.js"></script>
+    <style>
+    	.filter-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .filter-bar label {
+            margin-right: 10px;
+        }
+        .filter-bar select,
+        .filter-bar input {
+            margin-right: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        .filter-bar button {
+			padding: 10px 20px;
+			    font-size: 16px;
+			    background-color: #333;
+			    color: white;
+			    border: none;
+			    border-radius: 5px;
+			    cursor: pointer;
+
+        }
+    </style>
+</head>
+<body>
+    <header>
+    	<div class="hamburger" onclick="toggleSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+        <h1>جميع الأنميات</h1>
+    </header>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="Anime Stream.html">الصفحة الرئيسية</a></li>
+            <li><a href="schedule.html">مواعيد نزول الحلقات</a></li>
+            <li><a href="all-animes.html">جميع الأنميات</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <div class="filter-bar">
+            <label for="genre">اختر التصنيف:</label>
+            <select id="genre">
+                <option value="all">كل التصنيفات</option>
+                <option value="action">أكشن</option>
+                <option value="comedy">كوميديا</option>
+                <option value="imagination">خيال</option>
+                <option value="Adventures">مغامرات</option>
+                <option value="isekai">اسيكاي</option>
+                <!-- يمكنك إضافة المزيد من التصنيفات هنا -->
+            </select>
+            <label for="season">اختر الموسم:</label>
+            <select id="season">
+                <option value="all">كل المواسم</option>
+                <option value="spring">ربيع</option>
+                <option value="summer">صيف</option>
+                <option value="autumn">خريف</option>
+                <option value="winter">شتاء</option>
+                <!-- يمكنك إضافة المزيد من المواسم هنا -->
+            </select>
+            <input type="text" id="search" placeholder="ابحث عن أنمي...">
+            <button id="searchBtn" onclick="filterAnimes()">بحث</button>
+        </div>
+        <div class="anime-list">
+            <h2>قائمة الأنميات</h2>
+            <ul class="anime-list-grid">
+            <li data-genres='["action", "imagination"]' data-season="winter">
+                 	<a href="Watch Anime Stream.html?anime=Ore_Dake_Level_Up_na_Ken">
+                    <img src="https://witanime.cyou/wp-content/uploads/2024/01/Solo-Leveling-Ore-dake-Level-Up-na-Ken-scaled-413x559.jpg" alt="Ore Dake Level Up na Ken">
+                    <span>Ore Dake Level Up na Ken</span>
+                </a>
+            </li>
+            <li data-genres='["comedy", "imagination", "isekai"]' data-season="winter">            
+            		<a href="Watch Anime Stream.html?anime=Slime_Taoshite_300_nen_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita">
+            		<img src="https://witanime.cyou/wp-content/uploads/2021/04/Slime-Taoshite-300-nen-Shiranai-Uchi-ni-Level-Max-ni-Nattemashita-scaled-413x559.jpg" alt="Tensei shitara Ken Deshita">
+                    <span>Slime Taoshite 300 nen Shiranai Uchi ni Level Max ni Nattemashita</span></a>
+            </li>
+                <li data-genres='["action", "imagination", "isekai"]' data-season="autumn">
+                    <a href="Watch Anime Stream.html?anime=Tensei_shitara_Ken_Deshita">
+                    <img src="https://witanime.cyou/wp-content/uploads/2022/09/Tensei-shitara-Ken-Deshita-323x470.jpg" alt="Tensei shitara Ken Deshita">
+                    <span>Tensei shitara Ken Deshita</span></a>
+            </li>
+                <!-- يمكنك إضافة المزيد من الأنميات هنا -->
+            </ul>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+            function filterAnimes() {
+                const genre = document.getElementById('genre').value.toLowerCase();
+                const season = document.getElementById('season').value.toLowerCase();
+                const searchQuery = document.getElementById('search').value.toLowerCase();
+                const animes = document.querySelectorAll('.anime-list-grid li');
+
+                animes.forEach(anime => {
+                    const genresData = anime.getAttribute('data-genres');
+                    const animeGenres = genresData ? JSON.parse(genresData) : [];
+                    const animeSeason = anime.getAttribute('data-season').toLowerCase();
+                    const title = anime.querySelector('span').textContent.toLowerCase();
+
+                    const matchesGenre = (genre === 'all' || animeGenres.includes(genre));
+                    const matchesSeason = (season === 'all' || animeSeason === season);
+                    const matchesSearch = (searchQuery === '' || title.includes(searchQuery));
+
+                    if (matchesGenre && matchesSeason && matchesSearch) {
+                        anime.style.display = '';
+                    } else {
+                        anime.style.display = 'none';
+                    }
+                });
+            }
+
+            const searchInput = document.getElementById('search');
+            const searchBtn = document.getElementById('searchBtn');
+
+            if (searchInput && searchBtn) {
+                searchBtn.addEventListener('click', filterAnimes);
+
+                searchInput.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        filterAnimes();
+                    }
+                });
+            }
+
+            // تنفيذ البحث المبدئي عند تحميل الصفحة
+            filterAnimes();
+        });
+        </script>
+</body>
+</html>

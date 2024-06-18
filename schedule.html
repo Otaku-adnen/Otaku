@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Stream</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://i.pinimg.com/736x/2b/e6/80/2be680292cdea62cd8495a9d5a5866c0.jpg" type="image/x-icon">
+
+    <script lang="javascript" src="script.js"></script>
+</head>
+<body>
+    <header>
+    	<div class="hamburger" onclick="toggleSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+        <h1>مواعيد نزول الحلقات</h1>
+    </header>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="Anime Stream.html">الصفحة الرئيسية</a></li>
+            <li><a href="schedule.html">مواعيد نزول الحلقات</a></li>
+            <li><a href="all-animes.html">جميع الأنميات</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <h2>جدول مواعيد الحلقات</h2>
+        <p>هنا يمكنك إضافة جدول مواعيد نزول الحلقات.</p>
+    </div>
+    <script>
+    function toggleSidebar() {
+    	document.querySelector('.sidebar').classList.toggle('open');
+		}
+	</script>
+</body>
+</html>

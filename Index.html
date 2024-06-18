@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Stream</title>
+    <link rel="stylesheet" href="styles.css">
+    <script lang="javascript" src="script.js"></script>
+    <link rel="icon" href="https://i.pinimg.com/736x/2b/e6/80/2be680292cdea62cd8495a9d5a5866c0.jpg" type="image/x-icon">
+</head>
+<body>
+    <header>
+    <div class="header-container">
+    <div class="hamburger" onclick="toggleSidebar()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+        <h1>Anime Stream</h1>
+
+                </div>
+    </header>
+    <nav class="sidebar" id="sidebar">
+        <ul>
+            <li><a href="Anime Stream.html">الصفحة الرئيسية</a></li>
+            <li><a href="schedule.html">مواعيد نزول الحلقات</a></li>
+            <li><a href="all-animes.html">جميع الأنميات</a></li>
+        </ul>
+    </nav>
+    <div class="main-content">
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="ابحث عن أنمي...">
+            <button onclick="searchAnime()">بحث</button>
+        </div>
+        <div class="anime-list">
+        <h2>قائمة الأنميات</h2>
+         <ul class="anime-list-grid">
+            <li><a href="Watch Anime Stream.html?anime=Tensei_shitara_Ken_Deshita">
+           	 		<img src="https://witanime.cyou/wp-content/uploads/2022/09/Tensei-shitara-Ken-Deshita-323x470.jpg" alt="Tensei shitara Ken Deshita">
+                    <span>Tensei shitara Ken Deshita</span></a>
+            </li>
+            <li><a href="Watch Anime Stream.html?anime=Ore_Dake_Level_Up_na_Ken">
+                    <img src="https://witanime.cyou/wp-content/uploads/2024/01/Solo-Leveling-Ore-dake-Level-Up-na-Ken-scaled-413x559.jpg" alt="Ore Dake Level Up na Ken">
+                    <span>Ore Dake Level Up na Ken</span>
+                </a>
+            </li>
+            <li><a href="Watch Anime Stream.html?anime=Slime_Taoshite_300_nen_Shiranai_Uchi_ni_Level_Max_ni_Nattemashita">
+            		<img src="https://witanime.cyou/wp-content/uploads/2021/04/Slime-Taoshite-300-nen-Shiranai-Uchi-ni-Level-Max-ni-Nattemashita-scaled-413x559.jpg" alt="Tensei shitara Ken Deshita">
+                    <span>Slime Taoshite 300 nen Shiranai Uchi ni Level Max ni Nattemashita</span></a>
+            </li>
+         </ul>
+    </div>
+    </div>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }   
+        function searchAnime() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const animes = document.querySelectorAll('.anime-list-grid li');
+            animes.forEach(anime => {
+                const title = anime.querySelector('span').textContent.toLowerCase();
+                if (title.includes(query)) {
+                    anime.style.display = '';
+                } else {
+                    anime.style.display = 'none';
+                }
+            });
+            }
+            document.getElementById('search').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                searchAnime();
+            }
+        });
+        
+        
+    </script>
+</body>
+</html>

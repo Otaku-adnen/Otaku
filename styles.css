@@ -1,0 +1,574 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Cairo', sans-serif;
+    background: #121212;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background: linear-gradient(90deg, rgba(229, 9, 20, 1) 0%, rgba(241, 39, 17, 1) 50%, rgba(229, 9, 20, 1) 100%);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #E50914;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    z-index: 1;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    color: #FFF;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    text-align: center;
+    animation: glow 2s infinite alternate;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 0;
+    animation: rotateBg 10s linear infinite;
+}
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.5);
+    }
+}
+
+@keyframes rotateBg {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+}
+
+.hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+}
+
+.sidebar {
+    background-color: #444;
+    color: white;
+    width: 200px;
+    height: 100vh;
+    position: fixed;
+    left: -220px; /* مخفي بشكل افتراضي */
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    padding-top: 20px;
+    z-index:4;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid #555;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #555;
+}
+
+.main-content {
+    margin-left: 20px;
+    padding: 20px;
+    padding-top: 70px; /* Adjusted for header height */
+	width: calc(100% - 40px);
+    transition: margin-left 0.3s ease;
+}
+.anime-list-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.anime-list-grid li {
+    text-align: center;
+}
+
+.anime-list-grid li a {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.anime-list-grid li a img {
+    width: 100%;
+    
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.anime-list-grid li a span {
+    display: block;
+    position: absolute;
+    bottom: 10px; /* تعديل لتوسيط النص بشكل أفضل */
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-size: 14px; /* حجم الخط يمكن تعديله حسب الحاجة */
+    font-weight: bold;
+    background-color:rgba(0, 0, 0, 0.7); /* خلفية شفافة للنص */
+    padding: 5px; /* مساحة حول النص */
+    border-radius: 5px; /* حواف مستديرة */
+    width: calc(100% - 20px); /* تعديل لتناسب حجم الصورة */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.anime-list-grid li a:hover img {
+    transform: scale(1.05);
+}
+
+.anime-list-grid li a:hover span {
+    opacity: 1;
+}
+.search-bar {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #555;
+}
+
+.anime-details {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.anime-details img {
+    width: 200px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* نسبة 16:9 للفيديو */
+    height: 0;
+    overflow: hidden;
+    max-width: 100%; /* تعديل لضمان أنه لا يتجاوز عرض المحتوى */
+    margin-bottom: 20px; /* مسافة بين الفيديوهات */
+}
+
+.video-container iframe,
+.video-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.video-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.video-list li {
+    list-style: none;
+}
+
+.video-list a {
+    display: block;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.video-list a:hover {
+    background-color: #555;
+}
+
+.message {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
+}
+/*
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: #121212;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: linear-gradient(90deg, rgba(229, 9, 20, 1) 0%, rgba(241, 39, 17, 1) 50%, rgba(229, 9, 20, 1) 100%);
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #E50914;
+    position: relative;
+    overflow: hidden;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    color: #FFF;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+    animation: glow 2s infinite alternate;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.05);
+    z-index: 0;
+    animation: rotateBg 10s linear infinite;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.6), 0 0 40px rgba(255, 255, 255, 0.5);
+    }
+}
+
+@keyframes rotateBg {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.video-container {
+    max-width: 800px;
+    margin: 20px auto;
+    border: 2px solid #E50914;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background: #000;
+}
+
+video {
+    width: 100%;
+    height: auto;
+}
+
+.video-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    flex-direction: row;
+}
+
+.video-list li {
+    margin: 10px;
+}
+
+.video-list a {
+    text-decoration: none;
+    color: #E50914;
+    background: #1C1C1C;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.video-list a:hover {
+    background: #E50914;
+    color: #FFF;
+    transform: scale(1.05);
+}
+
+.message {
+    text-align: center;
+    padding: 10px;
+    margin: 20px auto;
+    background: #E50914;
+    color: #FFF;
+    border-radius: 5px;
+    max-width: 600px;
+    display: none;
+}
+
+.message.hidden {
+    display: none;
+}
+
+.message:not(.hidden) {
+    display: block;
+}
+
+
+.anime-list-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.anime-list-grid li {
+    text-align: center;
+}
+
+.anime-list-grid li a {
+    display: block;
+    position: relative;
+    text-decoration: none;
+    color: #FFF;
+}
+
+.anime-list-grid li a img {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.anime-list-grid li a span {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 1.2em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.anime-list-grid li a:hover img {
+    transform: scale(1.05);
+}
+
+.anime-list-grid li a:hover span {
+    opacity: 1;
+}*/
+/* CSS لإظهار زر القائمة في الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .hamburger-menu {
+	    display: none;
+	    cursor: pointer;
+	    position: absolute;
+	    top: 15px;
+	    left: 15px;
+	    z-index: 1000;
+	}
+	
+	.hamburger-menu div {
+	    width: 25px;
+	    height: 3px;
+	    background-color: white;
+	    margin: 5px;
+	}
+	.hamburger {
+        display: block;
+    }
+
+
+    .sidebar {
+        top: 75px; /* Adjusted for header height */
+        left: -220px; /* مخفي بشكل افتراضي */
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+	.main-content {
+        margin-left: 20px;
+        width: calc(100% - 40px);
+    }
+	.anime-list-grid li {
+	    list-style: none;
+	    text-align: center;
+	    position: relative; /* لضبط موقف span داخل ال li */
+	}
+	
+	.anime-list-grid li img {
+	    width: 100%;
+	    height: auto;
+	    border-radius: 5px;
+	    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	    transition: transform 0.3s ease;
+	}
+	
+	.anime-list-grid li a {
+	    text-decoration: none;
+	    display: block;
+	    position: relative;
+	}
+
+    .anime-list-grid li a span {
+    display: block;
+    position: absolute;
+    bottom: 10px; /* تعديل لتوسيط النص بشكل أفضل */
+    left: 0;
+    right: 0;
+    margin: auto;
+    font-size: 14px; /* حجم الخط يمكن تعديله حسب الحاجة */
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.7); /* خلفية شفافة للنص */
+    padding: 5px; /* مساحة حول النص */
+    border-radius: 5px; /* حواف مستديرة */
+    width: calc(100% - 20px); /* تعديل لتناسب حجم الصورة */
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	}
+	.video-container {
+        padding-bottom: 40%; /* تقليل النسبة لتناسب الشاشات الصغيرة بشكل أفضل */
+        margin-bottom: 10px; /* تقليل المسافة بين الفيديوهات */
+    }
+}
+/* استهدف الشاشات الكبيرة (أكبر من 768 بكسل) */
+@media (min-width: 769px) {
+    .sidebar {
+        background: linear-gradient(90deg, rgba(229, 9, 20, 1) 0%, rgba(241, 39, 17, 1) 50%, rgba(229, 9, 20, 1) 100%);
+        color: white;
+    
+    width: 200px;
+        height: 100%;
+        position: fixed;
+        top:0;
+        left: 0;
+        transition: none; /* إزالة التحول للحفاظ على القائمة مرئية دائمًا */
+        overflow-y: auto;
+        padding-top: 20px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .sidebar ul li {
+        border-bottom: 1px solid #555;
+    }
+
+    .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover {
+        background-color: #555;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        padding: 20px;
+        padding-top: 70px;
+        width: calc(100% - 240px);
+        transition: margin-left 0.3s ease;
+    }
+}
