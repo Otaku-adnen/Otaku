@@ -1,7 +1,7 @@
 export function addView() {
     fetch('https://0689-102-109-27-105.ngrok-free.app/add/', {
       method: 'post',
-        mode: 'no-cors'
+        // mode: 'no-cors'
       headers: {
         'Content-Type': 'application/json'
       }
