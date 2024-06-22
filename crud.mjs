@@ -1,5 +1,5 @@
 export function addView() {
-    fetch('http://192.168.109.117:3050/add/', {
+    fetch('https://0689-102-109-27-105.ngrok-free.app:3050/add/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
