@@ -87,13 +87,21 @@
                 <option value="winter">شتاء</option>
                 <!-- يمكنك إضافة المزيد من المواسم هنا -->
             </select></br>
+		<label for="year">اختر السنة:</label>
+            <select id="year">
+                <option value="all">كل السنوات</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <!-- يمكنك إضافة المزيد من السنوات هنا -->
+            </select>
             <input type="text" id="search" placeholder="ابحث عن أنمي...">
             <button id="searchBtn" onclick="filterAnimes()">بحث</button>
         </div>
         <div class="anime-list">
             <h2>قائمة الأنميات</h2>
             <ul class="anime-list-grid">
-		<li data-genres='["shonen", "action", "comedy"]' data-season="autumn">
+		<li data-genres='["shonen", "action", "comedy"]' data-season="autumn" data_year="2023">
 			<a href="Watch Anime Stream.html?anime=Spy_x_Family_2nd_Season">
                    <img src="https://cdn.myanimelist.net/images/anime/1506/138982.jpg" alt="Spy x Family 2nd Season">
                     <span>Spy x Family 2nd Season</span></a>
@@ -213,6 +221,7 @@
             function filterAnimes() {
                 const genre = document.getElementById('genre').value.toLowerCase();
                 const season = document.getElementById('season').value.toLowerCase();
+		const year = document.getElementById('year').value.toLowerCase();
                 const searchQuery = document.getElementById('search').value.toLowerCase();
                 const animes = document.querySelectorAll('.anime-list-grid li');
 
@@ -220,13 +229,15 @@
                     const genresData = anime.getAttribute('data-genres');
                     const animeGenres = genresData ? JSON.parse(genresData) : [];
                     const animeSeason = anime.getAttribute('data-season').toLowerCase();
+			const animeYear = anime.getAttribute('data-year').toLowerCase();
                     const title = anime.querySelector('span').textContent.toLowerCase();
 
                     const matchesGenre = (genre === 'all' || animeGenres.includes(genre));
                     const matchesSeason = (season === 'all' || animeSeason === season);
+			const matchesYear = (year === 'all' || animeYear === year);
                     const matchesSearch = (searchQuery === '' || title.includes(searchQuery));
 
-                    if (matchesGenre && matchesSeason && matchesSearch) {
+                    if (matchesGenre && matchesSeason && matchesYear && matchesSearch) {
                         anime.style.display = '';
                     } else {
                         anime.style.display = 'none';
