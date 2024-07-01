@@ -221,7 +221,7 @@
             function filterAnimes() {
                 const genre = document.getElementById('genre').value.toLowerCase();
                 const season = document.getElementById('season').value.toLowerCase();
-		const year = document.getElementById('year').value.toLowerCase();
+                const year = document.getElementById('year').value.toLowerCase();
                 const searchQuery = document.getElementById('search').value.toLowerCase();
                 const animes = document.querySelectorAll('.anime-list-grid li');
 
@@ -229,12 +229,12 @@
                     const genresData = anime.getAttribute('data-genres');
                     const animeGenres = genresData ? JSON.parse(genresData) : [];
                     const animeSeason = anime.getAttribute('data-season').toLowerCase();
-			const animeYear = anime.getAttribute('data-year').toLowerCase();
+                    const animeYear = anime.getAttribute('data-year').toLowerCase();
                     const title = anime.querySelector('span').textContent.toLowerCase();
 
                     const matchesGenre = (genre === 'all' || animeGenres.includes(genre));
                     const matchesSeason = (season === 'all' || animeSeason === season);
-			const matchesYear = (year === 'all' || animeYear === year);
+                    const matchesYear = (year === 'all' || animeYear === year);
                     const matchesSearch = (searchQuery === '' || title.includes(searchQuery));
 
                     if (matchesGenre && matchesSeason && matchesYear && matchesSearch) {
