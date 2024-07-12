@@ -1,5 +1,5 @@
 export function addView() {
-    fetch('https://0689-102-109-27-105.ngrok-free.app/add/', {
+    fetch('https://9f22-102-107-43-56.ngrok-free.app/add/', {
       method: 'post',
          
  
